@@ -1,6 +1,7 @@
 let state = {};
 state.itemsList = [];
 state.checkoutList = [];
+state.total = 0;
 
 const init = (state) => {
   state.itemsList.push({id: 1, name: 'Item1', price: 10});
@@ -20,6 +21,7 @@ const render = (state) => {
   $checkoutContainer.innerHTML = '';
   renderList($itemsContainer, state.itemsList);
   renderList($checkoutContainer, state.checkoutList);
+  renderTotal();
 };
 
 const renderList = ($container, itemsList) => {
@@ -28,12 +30,19 @@ const renderList = ($container, itemsList) => {
   });
 };
 
+const renderTotal = () => {
+  let $checkoutFooter = document.getElementById('checkoutFooter');
+  $checkoutFooter.innerHTML = calculateTotal();
+};
+
 const createItem = (item, containerName) => {
   let $item = document.createElement('div');
+
+  $item.innerHTML = item.name;
   $item.classList.add('item');
   $item.dataset.id = item.id;
   $item.dataset.price = item.price;
-  $item.innerHTML = item.name;
+
   if (containerName === 'itemsContainer') {
     $item.classList.add('col-sm-3');
     $item.addEventListener('click', addToCheckout);
@@ -66,6 +75,14 @@ const removeFromCheckout = (e) => {
   let checkoutItem = state.checkoutList.splice(checkoutItemIndex, 1)[0];
   state.itemsList.push(checkoutItem);
   render(state);
+};
+
+const calculateTotal = () => {
+  return state.checkoutList
+    .map(item => item.price)
+    .reduce((prev, curr) => {
+      return prev + curr;
+    }, 0);
 };
 
 init(state);
