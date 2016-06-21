@@ -1,0 +1,21 @@
+.items-container {
+  margin-left: 10px;
+  padding: 5px;
+  background-color: aqua;
+}
+
+.checkout-container {
+  margin-right: 10px;
+  margin-left: auto;
+  padding: 5px;
+  background-color: lightblue;
+}
+
+.item {
+  float: left;
+  margin: 15px;
+  padding: 20px;
+  height: 100px;
+  text-align: center;
+  background-color: pink;
+}
