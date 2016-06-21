@@ -38,7 +38,7 @@ const renderTotal = () => {
 const createItem = (item, containerName) => {
   let $item = document.createElement('div');
 
-  $item.innerHTML = item.name;
+  $item.innerHTML = item.name + '<br><br>' + item.price;
   $item.classList.add('item');
   $item.dataset.id = item.id;
   $item.dataset.price = item.price;
