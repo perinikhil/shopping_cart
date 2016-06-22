@@ -54,26 +54,34 @@ const createItem = (item, containerName) => {
 };
 
 const addToCheckout = (e) => {
+  let newState = Object.assign({}, state);
   let $item = e.target;
   let id = $item.dataset.id;
   let checkoutItemIndex =
-    state.itemsList
+    newState.itemsList
       .map(item => item.id)
       .indexOf(parseInt(id, 10));
-  let checkoutItem = state.itemsList.splice(checkoutItemIndex, 1)[0];
-  state.checkoutList.push(checkoutItem);
+
+  let checkoutItem = newState.itemsList[checkoutItemIndex];
+  newState.itemsList = newState.itemsList.filter(item => item.id !== checkoutItem.id);
+  newState.checkoutList.push(checkoutItem);
+  state = Object.assign({}, newState);
   render(state);
 };
 
 const removeFromCheckout = (e) => {
+  let newState = Object.assign({}, state);
   let $item = e.target;
   let id = $item.dataset.id;
   let checkoutItemIndex =
-    state.checkoutList
+    newState.checkoutList
       .map(item => item.id)
       .indexOf(parseInt(id, 10));
-  let checkoutItem = state.checkoutList.splice(checkoutItemIndex, 1)[0];
-  state.itemsList.push(checkoutItem);
+
+  let checkoutItem = newState.checkoutList[checkoutItemIndex];
+  newState.checkoutList = newState.checkoutList.filter(item => item.id !== checkoutItem.id);
+  newState.itemsList.push(checkoutItem);
+  state = Object.assign({}, newState);
   render(state);
 };
 
